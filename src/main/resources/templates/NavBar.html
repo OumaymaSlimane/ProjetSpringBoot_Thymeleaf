@@ -1,0 +1,61 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Titre de la navbar -->
+        <a class="navbar-brand" href="#">Gestion de Bibliothèque</a>
+        <!-- Bouton pour mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Liens de navigation -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/livres">📚 Liste des Livres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/emprunts">📄 Liste des Emprunts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/utilisateurs">👥 Liste des Utilisateurs Inscrits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/statistiques">📊 Statistiques</a> <!-- Lien vers la page des statistiques -->
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Style CSS intégré -->
+<style>
+    .navbar {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        font-family: 'Arial', sans-serif;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: #f39c12 !important; /* Couleur survol */
+        transform: scale(1.1); /* Animation au survol */
+    }
+
+    .navbar-dark .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+</style>

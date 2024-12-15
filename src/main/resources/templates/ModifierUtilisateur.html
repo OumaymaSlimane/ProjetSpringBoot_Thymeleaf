@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Modifier un Utilisateur</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://images.unsplash.com/photo-1713168718539-1c6db8f3eda8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFycmklQzMlQThyZSUyMHBsYW4lMjBkZSUyMGxhJTIwYmlibGlvdGglQzMlQThxdWV8ZW58MHx8MHx8fDA%3D');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 50px;
+      max-width: 600px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{navbar.html}"></div>
+
+<div class="container">
+  <h1>Modifier un Utilisateur</h1>
+  <form th:action="@{/utilisateurs/modifier/{id}(id=${utilisateur.id})}" th:object="${utilisateur}" method="post">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input type="text" id="nom" th:field="*{nom}" class="form-control" placeholder="Entrez le nom" required>
+    </div>
+    <div class="mb-3">
+      <label for="prenom" class="form-label">Prénom</label>
+      <input type="text" id="prenom" th:field="*{prenom}" class="form-control" placeholder="Entrez le prénom" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Entrez l'email" required>
+    </div>
+    <div class="mb-3">
+      <label for="telephone" class="form-label">Téléphone</label>
+      <input type="tel" id="telephone" th:field="*{telephone}" class="form-control"
+             placeholder="Entrez un numéro de téléphone"
+             pattern="[0-9]{8,15}" title="Entrez un numéro valide (8-15 chiffres)" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    <a href="/utilisateurs" class="btn btn-secondary mt-2">Retour</a>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

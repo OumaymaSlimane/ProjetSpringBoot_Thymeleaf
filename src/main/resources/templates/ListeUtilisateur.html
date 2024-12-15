@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{navbar.html}"></div>
+
+    <title>Liste des Utilisateurs inscrits</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1713168718539-1c6db8f3eda8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFycmklQzMlQThyZSUyMHBsYW4lMjBkZSUyMGxhJTIwYmlibGlvdGglQzMlQThxdWV8ZW58MHx8MHx8fDA%3D');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .user-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 1.2rem; /* Augmenter la taille du texte */
+        }
+        .user-card h5 {
+            margin-bottom: 15px;
+            font-size: 1.5rem; /* Augmenter la taille du nom */
+            font-weight: bold;
+        }
+        .user-card .emoji {
+            font-size: 2.5rem; /* Agrandir l'émoji */
+            margin-bottom: 10px;
+        }
+        .user-card p {
+            margin-bottom: 10px;
+        }
+        .user-card a {
+            margin-top: 10px;
+            font-size: 1rem; /* Agrandir les boutons */
+        }
+        .btn-add-user {
+            margin-bottom: 20px;
+            display: inline-block;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .btn-add-user:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Liste des Utilisateurs</h1>
+    <!-- Bouton pour ajouter un utilisateur -->
+    <a href="/utilisateurs/ajouter" class="btn-add-user">Ajouter un Nouveau Utilisateur</a>
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un utilisateur par nom ou prénom...">
+    </div>
+
+    <!-- Liste des utilisateurs -->
+    <div id="userList">
+        <div class="user-card" th:each="utilisateur : ${utilisateurs}" th:id="'user-' + ${utilisateur.id}">
+            <div class="emoji">👤</div>
+            <h5 th:text="${utilisateur.nom} + ' ' + ${utilisateur.prenom}"></h5>
+            <p>Email : <span th:text="${utilisateur.email}"></span></p>
+            <p>Téléphone : <span th:text="${utilisateur.telephone}"></span></p>
+            <a th:href="@{/utilisateurs/modifier/{id}(id=${utilisateur.id})}" class="btn btn-warning btn-sm">Modifier</a>
+            <a th:href="@{/utilisateurs/supprimer/{id}(id=${utilisateur.id})}" class="btn btn-danger btn-sm">Supprimer</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Script pour la recherche
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const users = document.querySelectorAll('.user-card');
+        users.forEach(user => {
+            const userName = user.querySelector('h5').textContent.toLowerCase();
+            if (userName.includes(searchValue)) {
+                user.style.display = 'block';
+            } else {
+                user.style.display = 'none';
+            }
+        });
+    });
+</script>
+</body>
+</html>

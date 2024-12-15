@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Emprunts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://st3.depositphotos.com/2807103/13149/i/450/depositphotos_131494310-stock-photo-blurred-bookshelf-in-library.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            margin-bottom: 20px; /* Espace entre la navbar et le contenu */
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            color: #000;
+            max-width: 1000px;
+            width: 90%;
+            margin: 20px auto; /* Centrage vertical */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #6a11cb;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #6a11cb;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+
+        tbody tr:hover {
+            background-color: #e1eaff;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #e64a19, #f57c00);
+            color: #fff;
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #fbc02d, #ffeb3b);
+            border: none;
+            border-radius: 25px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e57373, #f44336);
+            border: none;
+            border-radius: 25px;
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+<body>
+<!-- Inclusion de la navbar -->
+<div th:replace="~{navbar.html}"></div>
+
+<!-- Contenu principal -->
+<div class="container">
+    <h1>Liste des Emprunts</h1>
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Rechercher un emprunt..." onkeyup="filterTable()">
+    </div>
+
+    <div class="text-center mb-4">
+        <a href="/emprunts/ajouter" class="btn btn-primary">Ajouter un Emprunt</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Livre</th>
+            <th>Utilisateur</th>
+            <th>Date d'Emprunt</th>
+            <th>Date de Retour</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emprunt : ${emprunts}">
+            <td th:text="${emprunt.id}"></td>
+            <td th:text="${emprunt.livre.titre}"></td>
+            <td th:text="${emprunt.utilisateur.nom}"></td>
+            <td th:text="${emprunt.dateEmprunt}"></td>
+            <td th:text="${emprunt.dateRetour}"></td>
+            <td>
+                <a th:href="@{/emprunts/modifier/{id}(id=${emprunt.id})}" class="btn btn-warning btn-sm">Modifier</a>
+                <a th:href="@{/emprunts/supprimer/{id}(id=${emprunt.id})}" class="btn btn-danger btn-sm">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Script pour la recherche
+    function filterTable() {
+        const searchValue = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            const title = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // séléction de 2eem colonne
+            const user = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            if (title.includes(searchValue) || user.includes(searchValue)) {
+                row.style.display = ''; // Affiche la ligne
+            } else {
+                row.style.display = 'none'; // Masque la ligne
+            }
+        });
+    }
+</script>
+</body>
+</html>
